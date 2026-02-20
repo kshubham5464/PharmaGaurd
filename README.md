@@ -349,7 +349,7 @@ SUPABASE_ANON_KEY=your-anon-key
 ```env
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
-VITE_API_URL=http://localhost:3000
+VITE_API_URL=https://pharmagaurd.onrender.com
 ```
 
 ### 3. Install dependencies
@@ -374,7 +374,7 @@ cd frontend
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173)
+Open [[Click Here](https://pharma-gaurd-six.vercel.app/)]
 
 ### 5. Docker (backend only)
 
@@ -386,7 +386,7 @@ docker-compose up --build
 
 ## API Reference
 
-Base URL: `http://localhost:3000`
+Base URL: `https://pharmagaurd.onrender.com`
 
 > All endpoints that write data require a valid `Authorization: Bearer <supabase-jwt>` header.
 

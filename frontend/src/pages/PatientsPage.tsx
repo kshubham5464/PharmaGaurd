@@ -19,7 +19,7 @@ const PatientsPage = () => {
             const { data: { session } } = await supabase.auth.getSession();
             const token = session?.access_token;
 
-            const response = await fetch('http://localhost:3000/patients', {
+            const response = await fetch('https://pharmagaurd.onrender.com/patients', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 

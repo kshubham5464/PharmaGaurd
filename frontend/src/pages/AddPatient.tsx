@@ -34,7 +34,7 @@ const AddPatientPage = () => {
             // Get doctor_id from session user
             const user = session?.user;
 
-            const response = await fetch('http://localhost:3000/patients', {
+            const response = await fetch('https://pharmagaurd.onrender.com/patients', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
