@@ -349,7 +349,7 @@ SUPABASE_ANON_KEY=your-anon-key
 ```env
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
-VITE_API_URL=https://pharmagaurd.onrender.com
+VITE_API_URL=https://pharmagaurd.onrender.com/api
 ```
 
 ### 3. Install dependencies
@@ -386,7 +386,7 @@ docker-compose up --build
 
 ## API Reference
 
-Base URL: `https://pharmagaurd.onrender.com`
+Base URL: `https://pharmagaurd.onrender.com/api`
 
 > All endpoints that write data require a valid `Authorization: Bearer <supabase-jwt>` header.
 

@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 import patientRoutes from './routes/patientRoutes';
 import uploadRoutes from './routes/uploadRoutes';
 
-app.use('/patients', patientRoutes);
-app.use('/upload', uploadRoutes);
+app.use('/api/patients', patientRoutes);
+app.use('/api/upload', uploadRoutes);
 
 export default app;
