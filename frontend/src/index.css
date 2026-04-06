@@ -46,6 +46,11 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 180 100% 50%;
+    --neon-green: 142 70% 50%;
+    --neon-amber: 45 100% 50%;
+    --neon-red: 0 100% 60%;
+    --neon-blue: 180 100% 50%;
+    --neon-purple: 270 100% 60%;
   }
 }
  
@@ -173,3 +178,89 @@
 }
 .dot-loader span:nth-child(2) { animation-delay: 0.2s; }
 .dot-loader span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ═══════════════════════════════════════════════════════════
+   CUSTOM UTILITIES
+   ═══════════════════════════════════════════════════════════ */
+
+.pdf-only {
+  display: none;
+}
+
+@media print {
+  .pdf-only {
+    display: block !important;
+  }
+}
+
+/* Marquee horizontal scroll */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Neon Glow Utilities */
+.text-glow-blue {
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.2);
+}
+.text-glow-green {
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.5), 0 0 20px rgba(34, 197, 94, 0.2);
+}
+
+.bg-glow-blue {
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+.text-neon-green { color: hsl(var(--neon-green)); }
+.text-neon-amber { color: hsl(var(--neon-amber)); }
+.text-neon-red { color: hsl(var(--neon-red)); }
+.text-neon-blue { color: hsl(var(--neon-blue)); }
+.text-neon-purple { color: hsl(var(--neon-purple)); }
+
+.bg-neon-green { background-color: hsl(var(--neon-green)); }
+.bg-neon-amber { background-color: hsl(var(--neon-amber)); }
+.bg-neon-red { background-color: hsl(var(--neon-red)); }
+.bg-neon-blue { background-color: hsl(var(--neon-blue)); }
+.bg-neon-purple { background-color: hsl(var(--neon-purple)); }
+
+.border-neon-green { border-color: hsl(var(--neon-green)); }
+.border-neon-amber { border-color: hsl(var(--neon-amber)); }
+.border-neon-red { border-color: hsl(var(--neon-red)); }
+.border-neon-blue { border-color: hsl(var(--neon-blue)); }
+.border-neon-purple { border-color: hsl(var(--neon-purple)); }
+
+.shadow-neon-green { box-shadow: 0 0 20px hsla(var(--neon-green), 0.3); }
+.shadow-neon-amber { box-shadow: 0 0 20px hsla(var(--neon-amber), 0.3); }
+.shadow-neon-red { box-shadow: 0 0 20px hsla(var(--neon-red), 0.3); }
+.shadow-neon-blue { box-shadow: 0 0 20px hsla(var(--neon-blue), 0.3); }
+
+/* Custom scrollbar for terminal/dashboard feel */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.3);
+}
+
+@media (max-width: 640px) {
+  .animate-marquee {
+    animation-duration: 20s;
+  }
+}

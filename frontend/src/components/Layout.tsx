@@ -1,14 +1,18 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import PageTransition from './PageTransition';
 import { useState, useEffect } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, Globe, User } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Layout = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
+    const { session } = useAuth();
+    const userInitial = session?.user?.email?.charAt(0).toUpperCase() || 'D';
 
     // Close sidebar on route change (mobile)
     useEffect(() => {
@@ -69,7 +73,16 @@ const Layout = () => {
                     <span className="text-lg font-bold tracking-wider text-gray-900 dark:text-white">
                         Pharma<span className="text-neon-blue">X</span>
                     </span>
-                    <div className="w-9" /> {/* spacer */}
+                    <button
+                        onClick={() => navigate('/')}
+                        className="p-2 rounded-lg text-gray-400 hover:text-neon-blue font-bold text-xs"
+                    >
+                        <Globe className="h-5 w-5" />
+                    </button>
+                    {/* User Profile Shortcut */}
+                    <div className="h-8 w-8 rounded-full bg-neon-blue/20 flex items-center justify-center border border-neon-blue/30 ml-2">
+                        <span className="text-xs font-black text-neon-blue">{userInitial}</span>
+                    </div>
                 </div>
 
                 {/* Scrollable content */}

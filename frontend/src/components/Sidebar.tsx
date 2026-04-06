@@ -1,6 +1,6 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Home, UserPlus, FileText, Dna, LogOut, BarChart2, UploadCloud, Activity, Database, BookOpen } from 'lucide-react';
+import { Home, UserPlus, FileText, Dna, LogOut, BarChart2, UploadCloud, Activity, Database, BookOpen, Globe } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { ModeToggle } from '@/components/mode-toggle';
@@ -8,7 +8,10 @@ import { motion } from 'framer-motion';
 
 const Sidebar = () => {
     const location = useLocation();
-    const { signOut } = useAuth();
+    const navigate = useNavigate();
+    const { signOut, session } = useAuth();
+    const userEmail = session?.user?.email || '';
+    const userInitial = userEmail.charAt(0) || 'D';
 
     const links = [
         { href: '/dashboard', label: 'Overview', icon: Home },
@@ -33,17 +36,28 @@ const Sidebar = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="p-6 flex items-center gap-2 border-b border-gray-200 dark:border-white/10"
+                className="p-6 flex items-center justify-between border-b border-gray-200 dark:border-white/10"
             >
-                <motion.div
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 4, ease: 'easeInOut' }}
+                <div className="flex items-center gap-2 group cursor-pointer" onClick={() => navigate('/dashboard')}>
+                    <motion.div
+                        animate={{ rotate: [0, 10, -10, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 4, ease: 'easeInOut' }}
+                    >
+                        <Activity className="h-6 w-6 text-neon-green" />
+                    </motion.div>
+                    <span className="text-xl font-bold tracking-wider">
+                        Pharma<span className="text-neon-blue">X</span>
+                    </span>
+                </div>
+                
+                {/* Home Shortcut */}
+                <button 
+                    onClick={() => navigate('/')}
+                    title="Return to Main Site"
+                    className="p-1.5 rounded-lg text-gray-400 hover:text-neon-blue hover:bg-neon-blue/10 transition-colors"
                 >
-                    <Activity className="h-6 w-6 text-neon-green" />
-                </motion.div>
-                <span className="text-xl font-bold tracking-wider">
-                    Pharma<span className="text-neon-blue">X</span>
-                </span>
+                    <Globe className="h-4 w-4" />
+                </button>
             </motion.div>
 
             {/* Nav Links */}
@@ -101,6 +115,24 @@ const Sidebar = () => {
                     <span className="text-xs text-gray-500 uppercase tracking-wider">Theme</span>
                     <ModeToggle />
                 </div>
+
+                {/* User Profile Info */}
+                <div className="px-2 py-3 mb-2 rounded-xl bg-gray-50 dark:bg-white/[0.03] border border-gray-100 dark:border-white/5 transition-all">
+                    <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full bg-neon-blue/20 flex items-center justify-center border border-neon-blue/30">
+                            <span className="text-xs font-black text-neon-blue uppercase">
+                                {userInitial}
+                            </span>
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                            <span className="text-[10px] font-black text-neon-blue uppercase tracking-widest leading-none mb-1">Active Session</span>
+                            <span className="text-xs font-bold text-gray-700 dark:text-gray-300 truncate tracking-tight">
+                                {userEmail}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 <Button
                     variant="ghost"
                     className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all duration-200 group"

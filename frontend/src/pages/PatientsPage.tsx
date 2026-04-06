@@ -50,62 +50,84 @@ const PatientsPage = () => {
 
 
 
+    const fadeInUp = {
+        initial: { opacity: 0, y: 15 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.4 }
+    };
+
     return (
-        <div className="space-y-5 sm:space-y-6">
+        <div className="space-y-6 sm:space-y-8">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <motion.div 
+                {...fadeInUp}
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+            >
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Patients</h1>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{patients.length} registered patient{patients.length !== 1 ? 's' : ''}</p>
+                    <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 dark:text-white uppercase transition-all">Patients Database</h1>
+                    <p className="text-xs sm:text-sm font-bold text-gray-400 dark:text-gray-500 mt-1 flex items-center gap-2">
+                        <span className="inline-block h-1.5 w-1.5 rounded-full bg-neon-blue animate-pulse" />
+                        {patients.length} ENROLLED CLINICAL PROFILES
+                    </p>
                 </div>
                 <Link to="/patients/new">
-                    <Button className="bg-neon-blue hover:bg-neon-blue/80 text-black font-bold w-full sm:w-auto">
-                        <Plus className="mr-2 h-4 w-4" /> Add Patient
+                    <Button className="bg-neon-blue hover:bg-neon-blue/80 text-black font-black w-full sm:w-auto px-6 shadow-[0_0_15px_rgba(0,240,255,0.2)] hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all">
+                        <Plus className="mr-2 h-4 w-4 stroke-[3px]" /> REGISTER PATIENT
                     </Button>
                 </Link>
-            </div>
+            </motion.div>
 
-            {/* ── DESKTOP TABLE (hidden on mobile) ── */}
-            <div className="hidden md:block rounded-xl border border-gray-200 dark:border-white/10 overflow-hidden">
+            {/* ── DESKTOP TABLE ── */}
+            <div className="hidden md:block rounded-2xl border border-gray-200 dark:border-white/10 overflow-hidden bg-white/50 dark:bg-black/20 backdrop-blur-sm">
                 <Table>
                     <TableHeader>
-                        <TableRow className="bg-gray-50 dark:bg-white/5">
-                            <TableHead className="font-semibold">Name</TableHead>
-                            <TableHead className="font-semibold">Age</TableHead>
-                            <TableHead className="font-semibold">Gender</TableHead>
-                            <TableHead className="font-semibold">Medical History</TableHead>
-                            <TableHead className="text-right font-semibold">Actions</TableHead>
+                        <TableRow className="bg-gray-50/50 dark:bg-white/5 border-b border-gray-200 dark:border-white/10">
+                            <TableHead className="font-bold text-[10px] uppercase tracking-widest py-4">Full Identity</TableHead>
+                            <TableHead className="font-bold text-[10px] uppercase tracking-widest py-4">Clinical Age</TableHead>
+                            <TableHead className="font-bold text-[10px] uppercase tracking-widest py-4">Gender</TableHead>
+                            <TableHead className="font-bold text-[10px] uppercase tracking-widest py-4">History Overview</TableHead>
+                            <TableHead className="text-right font-bold text-[10px] uppercase tracking-widest py-4">Operations</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {loading ? (
                             <TableRow>
-                                <TableCell colSpan={5} className="text-center py-10 text-gray-500">Loading...</TableCell>
+                                <TableCell colSpan={5} className="text-center py-20 text-gray-400 font-medium italic">Synchronizing patient data...</TableCell>
                             </TableRow>
                         ) : patients.length === 0 ? (
                             <TableRow>
-                                <TableCell colSpan={5} className="text-center py-10 text-gray-500">No patients found. Add your first patient!</TableCell>
+                                <TableCell colSpan={5} className="text-center py-20 text-gray-400 font-medium h-[300px]">
+                                    <div className="flex flex-col items-center gap-4 opacity-50">
+                                        <User className="h-12 w-12" />
+                                        <p>No clinical profiles detected in encrypted storage.</p>
+                                    </div>
+                                </TableCell>
                             </TableRow>
                         ) : (
                             patients.map((patient, i) => (
                                 <motion.tr
                                     key={patient.id}
-                                    initial={{ opacity: 0, y: 8 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.04 }}
-                                    className="border-b border-gray-100 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: i * 0.05, duration: 0.3 }}
+                                    className="border-b border-gray-100/50 dark:border-white/5 hover:bg-neon-blue/[0.02] transition-colors group"
                                 >
-                                    <TableCell className="font-medium text-gray-900 dark:text-white">{patient.name}</TableCell>
-                                    <TableCell className="text-gray-600 dark:text-gray-400">{patient.age}</TableCell>
-                                    <TableCell className="text-gray-600 dark:text-gray-400">{patient.gender}</TableCell>
-                                    <TableCell className="max-w-xs truncate text-gray-600 dark:text-gray-400">{patient.medical_history}</TableCell>
-                                    <TableCell className="text-right">
+                                    <TableCell className="font-bold text-gray-900 dark:text-gray-100 py-4 group-hover:text-neon-blue transition-colors">{patient.name}</TableCell>
+                                    <TableCell className="text-gray-600 dark:text-gray-400 font-medium">{patient.age}</TableCell>
+                                    <TableCell className="text-gray-600 dark:text-gray-400 font-medium">{patient.gender}</TableCell>
+                                    <TableCell className="max-w-[200px] truncate text-gray-500 dark:text-gray-500 italic text-xs">{patient.medical_history || 'N/A'}</TableCell>
+                                    <TableCell className="text-right py-4">
                                         <div className="flex items-center justify-end gap-2">
                                             <Link to={`/patients/${patient.id}`}>
-                                                <Button variant="ghost" size="sm" className="hover:text-neon-blue hover:bg-neon-blue/10">View</Button>
+                                                <Button variant="ghost" size="sm" className="h-8 px-4 font-bold text-[10px] uppercase tracking-tighter hover:text-neon-blue hover:bg-neon-blue/10 border border-transparent hover:border-neon-blue/20 rounded-full">Explore Details</Button>
                                             </Link>
-                                            <Button variant="ghost" size="sm" onClick={() => handleDelete(patient.id)} className="text-red-500 hover:text-red-400 hover:bg-red-500/10">
-                                                <Trash2 className="h-4 w-4" />
+                                            <Button 
+                                                variant="ghost" 
+                                                size="sm" 
+                                                onClick={() => handleDelete(patient.id)}
+                                                className="h-8 w-8 p-0 text-gray-400 hover:text-red-500 hover:bg-red-500/10 rounded-full transition-all"
+                                            >
+                                                <Trash2 className="h-3.5 w-3.5" />
                                             </Button>
                                         </div>
                                     </TableCell>
@@ -116,44 +138,57 @@ const PatientsPage = () => {
                 </Table>
             </div>
 
-            {/* ── MOBILE CARD LIST (visible only on mobile) ── */}
-            <div className="md:hidden space-y-3">
+            {/* ── MOBILE CARD LIST ── */}
+            <div className="md:hidden space-y-4">
                 {loading ? (
-                    <div className="text-center py-10 text-gray-500">Loading...</div>
+                    <div className="text-center py-20 text-gray-400 animate-pulse">Syncing...</div>
                 ) : patients.length === 0 ? (
-                    <div className="text-center py-10 text-gray-500">No patients found.</div>
+                    <div className="text-center py-20 text-gray-500 border border-dashed border-gray-200 dark:border-white/10 rounded-2xl">No profiles found.</div>
                 ) : (
                     patients.map((patient, i) => (
                         <motion.div
                             key={patient.id}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.05 }}
-                            className="glass-card p-4 rounded-xl border border-gray-200 dark:border-white/10"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.08, duration: 0.4 }}
+                            className="glass-card p-5 rounded-2xl border border-gray-200 dark:border-white/10 relative overflow-hidden group shadow-sm active:scale-[0.98] transition-transform"
                         >
-                            <div className="flex items-start justify-between gap-3">
-                                <div className="flex items-center gap-3 min-w-0">
-                                    <div className="p-2 bg-neon-blue/10 dark:bg-neon-blue/20 rounded-lg flex-shrink-0">
-                                        <User className="h-4 w-4 text-neon-blue" />
+                            {/* Decorative accent */}
+                            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-neon-blue transition-all group-hover:w-2" />
+                            
+                            <div className="flex items-start justify-between gap-4">
+                                <div className="flex items-center gap-4 min-w-0">
+                                    <div className="p-3 bg-neon-blue/10 dark:bg-neon-blue/20 rounded-2xl flex-shrink-0 group-hover:rotate-12 transition-transform">
+                                        <User className="h-5 w-5 text-neon-blue" />
                                     </div>
                                     <div className="min-w-0">
-                                        <p className="font-semibold text-gray-900 dark:text-white truncate">{patient.name}</p>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">{patient.age} yrs · {patient.gender}</p>
+                                        <p className="font-black text-gray-900 dark:text-white truncate uppercase tracking-tight text-lg">{patient.name}</p>
+                                        <p className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-500 tracking-widest">{patient.age} YRS · {patient.gender}</p>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-1 flex-shrink-0">
+                                <div className="flex items-center gap-1 flex-shrink-0 pt-1">
                                     <Link to={`/patients/${patient.id}`}>
-                                        <Button variant="ghost" size="sm" className="h-8 px-2 hover:text-neon-blue hover:bg-neon-blue/10">
-                                            <ChevronRight className="h-4 w-4" />
+                                        <Button variant="ghost" size="sm" className="h-9 w-9 p-0 rounded-full hover:text-neon-blue hover:bg-neon-blue/10 border border-transparent hover:border-neon-blue/20">
+                                            <ChevronRight className="h-5 w-5" />
                                         </Button>
                                     </Link>
-                                    <Button variant="ghost" size="sm" onClick={() => handleDelete(patient.id)} className="h-8 px-2 text-red-500 hover:text-red-400 hover:bg-red-500/10">
-                                        <Trash2 className="h-3.5 w-3.5" />
+                                    <Button 
+                                        variant="ghost" 
+                                        size="sm" 
+                                        onClick={() => handleDelete(patient.id)} 
+                                        className="h-9 w-9 p-0 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-500/10"
+                                    >
+                                        <Trash2 className="h-4 w-4" />
                                     </Button>
                                 </div>
                             </div>
                             {patient.medical_history && (
-                                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 truncate pl-11">{patient.medical_history}</p>
+                                <div className="mt-4 pl-14">
+                                    <p className="text-[11px] text-gray-500 dark:text-gray-500 italic bg-gray-50 dark:bg-white/5 p-2 rounded-lg border border-gray-100 dark:border-white/5 line-clamp-2 leading-relaxed">
+                                        {patient.medical_history}
+                                    </p>
+                                </div>
                             )}
                         </motion.div>
                     ))

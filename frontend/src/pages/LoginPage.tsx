@@ -10,6 +10,8 @@ import { Activity, Lock, Mail, KeyRound } from 'lucide-react';
 const DEMO_EMAIL = 'abhishekcse5462@gmail.com';
 const DEMO_PASSWORD = 'Abhishek@123';
 
+import GeneLoader from '@/components/ui/GeneLoader';
+
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,14 +31,25 @@ const LoginPage = () => {
 
         if (error) {
             setError(error.message);
+            setLoading(false);
         } else {
             navigate('/dashboard');
         }
-        setLoading(false);
     };
+
+    if (loading) return <GeneLoader message="Authenticating Clinician..." />;
 
     return (
         <div className="flex min-h-screen w-full items-center justify-center bg-background relative overflow-hidden transition-colors duration-300">
+            {/* Home Shortcut */}
+            <button 
+                onClick={() => navigate('/')}
+                className="absolute top-8 left-8 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-neon-blue hover:border-neon-blue/30 hover:bg-neon-blue/5 transition-all group"
+            >
+                <Activity className="h-4 w-4" />
+                <span className="text-xs font-black uppercase tracking-widest">Main Site</span>
+            </button>
+
             {/* Background Effects */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-[-20%] right-[-20%] w-[800px] h-[800px] bg-neon-blue/10 rounded-full blur-[150px] animate-pulse" />

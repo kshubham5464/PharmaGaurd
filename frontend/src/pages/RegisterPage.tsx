@@ -7,6 +7,8 @@ import GlassCard from '@/components/ui/GlassCard';
 import { Link, useNavigate } from 'react-router-dom';
 import { Activity, Lock, Mail, User } from 'lucide-react';
 
+import GeneLoader from '@/components/ui/GeneLoader';
+
 const RegisterPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -34,22 +36,27 @@ const RegisterPage = () => {
 
             if (signUpError) throw signUpError;
 
-            // Create profile entry
-            // Profile creation is now handled by a Database Trigger on auth.users
-            // No need to manually insert into 'profiles'
-
-
             alert('Registration successful! Please check your email for verification.');
             navigate('/login');
         } catch (error: any) {
             setError(error.message);
-        } finally {
             setLoading(false);
         }
     };
 
+    if (loading) return <GeneLoader message="Sequencing New Account..." />;
+
     return (
         <div className="flex min-h-screen w-full items-center justify-center bg-background relative overflow-hidden transition-colors duration-300">
+            {/* Home Shortcut */}
+            <button 
+                onClick={() => navigate('/')}
+                className="absolute top-8 left-8 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-neon-green hover:border-neon-green/30 hover:bg-neon-green/5 transition-all group"
+            >
+                <Activity className="h-4 w-4" />
+                <span className="text-xs font-black uppercase tracking-widest">Main Site</span>
+            </button>
+
             {/* Background Effects */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-[-20%] left-[-20%] w-[800px] h-[800px] bg-neon-blue/10 rounded-full blur-[150px] animate-pulse" />
