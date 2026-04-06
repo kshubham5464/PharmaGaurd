@@ -2,7 +2,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import PageTransition from './PageTransition';
 import { useState, useEffect } from 'react';
-import { Menu, Globe, User } from 'lucide-react';
+import { Menu, Globe } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 import { motion, AnimatePresence } from 'framer-motion';
