@@ -1,7 +1,7 @@
 import GlassCard from '@/components/ui/GlassCard';
 import { 
     Users, AlertTriangle, FileText, TrendingUp, CheckCircle, 
-    Cpu, Globe, ShieldCheck, Zap, Activity, ChevronRight, Search,
+    Cpu, Globe, ShieldCheck, Activity, ChevronRight, Search,
     Terminal, Database, Radio, Loader2
 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
@@ -9,7 +9,7 @@ import { supabase } from '@/services/supabase';
 import { 
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
     ResponsiveContainer, Cell, Radar, RadarChart, PolarGrid, 
-    PolarAngleAxis, PolarRadiusAxis 
+    PolarAngleAxis 
 } from 'recharts';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -22,7 +22,7 @@ const Dashboard = () => {
     });
     const [alerts, setAlerts] = useState<any[]>([]);
     const [chartData, setChartData] = useState<any[]>([]);
-    const [radarData, setRadarData] = useState<any[]>([
+    const [radarData] = useState<any[]>([
         { subject: 'Genomic Sync', A: 120, fullMark: 150 },
         { subject: 'AI Accuracy', A: 98, fullMark: 150 },
         { subject: 'Drug DB', A: 86, fullMark: 150 },
